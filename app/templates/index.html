@@ -1,0 +1,196 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Inicio {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+      <div class="container-fluid navbar-pino">
+        <div class="header-body">
+          <div class="row align-items-center py-4">
+            <div class="col-lg-6 col-7">
+              <h6 class="h2 text-white d-inline-block mb-0">Inicio</h6>
+              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                  <li class="breadcrumb-item"><a href="#"><i class="ni ni-shop"></i></a></li>
+                  <li class="breadcrumb-item"><a href="#">Home</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Inicio</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+          <!-- Tarjetas de estadisticas, solo ejemplo por el momento -->
+          <div class="row">
+            <div class="col-xl-3 col-md-6">
+              <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Número de reportes</h5>
+                      <span class="h2 font-weight-bold mb-0">1,897</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                        <i class="ni ni-chart-bar-32"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Reportes atendidos</h5>
+                      <span class="h2 font-weight-bold mb-0">356</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                        <i class="ni ni-air-baloon"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Reportes pendientes</h5>
+                      <span class="h2 font-weight-bold mb-0">1468</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                        <i class="ni ni-time-alarm"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <h5 class="card-title text-uppercase text-muted mb-0">Reportes cancelados</h5>
+                      <span class="h2 font-weight-bold mb-0">73</span>
+                    </div>
+                    <div class="col-auto">
+                      <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                        <i class="ni ni-scissors"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido de la página, contiene una tabla de ejemplo de reportes -->
+    <div class="container-fluid mt--6">
+      <div class="row">
+      </div>
+      <div class="row">
+        <div class="col-xl-11">
+          <div class="card">
+            <div class="card-header border-0">
+              <div class="row align-items-center">
+                <div class="col">
+                  <h3 class="mb-0">Historial de reportes (por el momento son ejemplos)</h3>
+                </div>
+                <div class="col text-right">
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <!-- Projects table -->
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Número de reporte</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Fecha</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      1111111
+                    </th>
+                    <td>
+                      Calle 7, Colonia Siete, Pinotepa Nal
+                    </td>
+                    <td>
+                      Atendido
+                    </td>
+                    <td>
+                      11/09/2020
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      222222
+                    </th>
+                    <td>
+                      Calle 14, Barrio Catorce, Pinotepa Nal
+                    </td>
+                    <td>
+                      Pendiente
+                    </td>
+                    <td>
+                        03/10/2020
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      3333333
+                    </th>
+                    <td>
+                      Calle 3, Colonia Tres, Pinotepa Nal
+                    </td>
+                    <td>
+                      Cancelado
+                    </td>
+                    <td>
+                      07/10/2020
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-1">
+        </div>
+      </div>
+
+      {% include "includes/footer.html" %}
+
+    </div>
+
+{% endblock content %}
+
+<!-- JavaScript -->
+{% block javascripts %}
+
+  <script src="../static/vendor/Chart.min.js"></script>
+  <script src="../static/vendor/Chart.extension.js"></script>
+
+{% endblock javascripts %}
