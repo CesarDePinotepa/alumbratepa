@@ -5,7 +5,7 @@ Este archivo ayuda a manejar la estructura lógica de los datos del usuario con 
 """
 import hashlib
 
-from flask import flash, request, render_template
+from flask import flash, request, render_template, redirect, url_for
 from ..app import mysql
 
 
@@ -41,11 +41,13 @@ class UsuarioModel():
             # cur.execute("SELECT * FROM `usuarios`")
             data = cur.fetchall()
             cur.close()
-            print(len(data))
-            if data:
-                flash(data[0][1])
-            else:
-                return render_template("")
+
+            return data
+            # print(len(data))
+            # if data:
+            #     flash(data[0][1])
+            # else:
+            #     flash("Usuario o contraseña incorrecta")
 
 
 usuario = UsuarioModel()

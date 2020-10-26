@@ -2,7 +2,7 @@
 Este archivo maneja las solicitudes del cliente para los datos del usuario del sistema
 """
 
-from flask import request, render_template
+from flask import request, render_template, flash
 from app.models.usuarios_model import usuario
 
 
@@ -41,10 +41,14 @@ class HomeController:
         _email = request.form['email']
         _password = request.form['password']
 
-        usuario.ini_sesion(_email, _password)
+        user = usuario.ini_sesion(_email, _password)
 
-        return render_template("paginas/inicio_usuario.html", title="Inicio")
-
+        if usuario:
+            flash(user[0][1])
+            return render_template('paginas/inicio_usuario.html')
+        else:
+            flash('El usuario o la contraseña son incorrectos')
+            return render_template('cuentas/login.html')
 
 homecontroller = HomeController()
 
