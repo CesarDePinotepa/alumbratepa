@@ -1,0 +1,142 @@
+{% extends 'layouts/base_user.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+
+<div class="header bg-primary pb-6">
+<div class="container-fluid">
+  <div class="header-body">
+    <div class="row align-items-center py-4">
+      <div class="col-lg-6 col-7">
+        <h6 class="h2 text-white d-inline-block mb-0">Reportes</h6>
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+          <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item"><a href="#">Subir reporte</a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-lg-6 col-5 text-right">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-4 order-xl-2">
+      <div class="card card-profile">
+          <div id="map-default" class="map-canvas" data-lat="16.3461749" data-lng="-98.0356095" style="height: 600px;"></div>
+      </div>
+    </div>
+    <div class="col-xl-8 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Agregar información del foco </h3>
+            </div>
+            <div class="col-4 text-right">
+
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form action="" method="post">
+            <h6 class="heading-small text-muted mb-4">Info</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+              <!-- user id -->
+              <input type="hidden" name="user_id"  value="{{ user_id }}">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Seleccione malfuncionamiento</label>
+                      <select name="mal" id="input-mal" class="form-control">
+                          {% for d in datos %}
+                          <option value="{{ d.name }}">{{ d.name }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Direccón</label>
+{#                      @todo: Esta direccion se debe obtener automaticamente desde una API de Google#}
+                    <input type="text" name="direccion" class="form-control" placeholder="Dirección" value="{{ request.form.direccion }}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">Imagenes</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address">Imagen 1</label>
+                    <input id="imagen-1" class="form-control-file" placeholder="Imagen 1" type="file" disabled>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address">Imagen 2</label>
+                    <input id="imagen-2" class="form-control-file" placeholder="Imagen 2" type="file" disabled>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address">Imagen 3</label>
+                    <input id="imagen-3" class="form-control-file" placeholder="Imagen 3" type="file" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+{#                    @todo: poner la imagen 1 aqui para que el usuario la vea#}
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+{#                @todo: poner la imagen 2 aqui para que el usuario la vea#}
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+{#                @todo: poner la imagen 3 aqui para que el usuario la vea#}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Description -->
+            <h6 class="heading-small text-muted mb-4">Comentarios</h6>
+            <div class="pl-lg-4">
+                <div class="form-group">
+                    <label class="form-control-label">Agregue un comentario</label>
+                    <textarea rows="4" name="comentario" class="form-control" placeholder="Ejemplo: El foco lleva 3 días sin prender"
+                              value="{{ request.form.comentario }}"></textarea>
+                </div>
+            </div>
+               <div class="text-center">
+                <button type="button" id="btnsubmit" class="btn btn-primary mt-4">Reportar</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTTfWur0PDbZWPr7Pmq8K3jiDp0_xUziI"></script>
+{% endblock javascripts %}
