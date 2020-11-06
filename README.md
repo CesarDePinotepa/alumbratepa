@@ -39,7 +39,7 @@ conda create --name webapp --file webenv.txt
 
 * debes de estar en la raiz del proyecto, es decir 
 
-![App run](./app/static/images/app_run.png "App run") 
+![App run](./app/static/images/app_run.PNG "App run") 
 
 ```bash
 conda activate webapp 
@@ -51,7 +51,7 @@ flask run
 
 * Desde la consolo de git y en la raíz del proyecto
 
-![Git pull](./app/static/images/git.png "Git pull") 
+![Git pull](./app/static/images/git.PNG "Git pull") 
 
 * debes de ejecutar la siguiente instrucción:
 ```bash
