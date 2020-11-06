@@ -12,18 +12,16 @@ Esto es la base de los ...
     Alumbratepa - {% block title %} {% endblock %}
   </title>
 
-  <!-- Favicon - loaded as static -->
+  <!-- Favicon  -->
   <link rel="icon" href="../../static/images/favicon.png" type="image/png">
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
   <!-- Icons -->
   <link rel="stylesheet" href="../../static/vendor/nucleo.css" type="text/css">
   <link rel="stylesheet" href="../../static/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
-  <!-- Page plugins -->
-  <!-- Argon CSS -->
-  <link rel="stylesheet" href="../../static/css/argon.css?v=1.2.0" type="text/css">
 
-  <!-- Specific CSS goes HERE -->
+  <!-- CSS -->
+  <link rel="stylesheet" href="../../static/css/argon.css?v=1.2.0" type="text/css">
 
  <style>
 .navbar-pino
@@ -39,11 +37,11 @@ Esto es la base de los ...
 
 <body class="">
 
-  {% include "includes/sidenav.html" %}
+  {% include "includes/sidenav_user.html" %}
 
   <div class="main-content" id="panel">
 
-    {% include "includes/navigation.html" %}
+    {% include "includes/navigation_user.html" %}
 
     {% block content %}{% endblock content %}
 
@@ -51,7 +49,6 @@ Esto es la base de los ...
 
   {% include "includes/scripts.html" %}
 
-  <!-- Specific JS goes HERE -->
   {% block javascripts %}{% endblock javascripts %}
 
   <script src="../../static/js/argon.js?v=1.2.0"></script>

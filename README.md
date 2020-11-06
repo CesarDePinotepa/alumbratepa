@@ -46,3 +46,15 @@ conda activate webapp
 set FLASK_APP = app
 flask run 
 ```
+
+## Actualizar repositorio
+
+* Desde la consolo de git y en la raíz del proyecto
+
+![Git pull](./app/static/images/git.png "Git pull") 
+
+* debes de ejecutar la siguiente instrucción:
+```bash
+git pull 
+```
+* y deberías tener actualizado el repositorio

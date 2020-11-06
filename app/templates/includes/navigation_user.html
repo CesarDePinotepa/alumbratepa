@@ -1,0 +1,45 @@
+<nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+  <div class="container-fluid navbar-pino">
+    <div class="collapse navbar-collapse navbar-pino" id="navbarSupportedContent">
+      <!-- Titulo del sistema -->
+        <div class="form-group mb-0">
+            <h6 class="h2 text-white d-inline-block mb-0">Sistema de reporte para el alumbrado público</h6>
+        </div>
+        <ul class="navbar-nav align-items-center  ml-md-auto ">
+        </ul>
+        <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
+        <li class="nav-item dropdown">
+          <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="media align-items-center">
+              <span class="icon icon-shape bg-dark text-white rounded-circle shadow">
+{#                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">#}
+                <i class="ni ni-satisfied text-info"></i>
+              </span>
+              <div class="media-body  ml-2  d-none d-lg-block">
+                <span class="mb-0 text-sm  font-weight-bold">
+                    {% if session['logged_in'] %}
+                    {{ user }}
+                    {% endif %}
+                </span>
+              </div>
+            </div>
+          </a>
+          <div class="dropdown-menu  dropdown-menu-right ">
+            <div class="dropdown-header noti-title">
+              <h6 class="text-overflow m-0">!Bienvenido!</h6>
+            </div>
+            <a href="#" class="dropdown-item">
+              <i class="ni ni-single-02"></i>
+              <span>Perfil</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="ni ni-user-run"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
