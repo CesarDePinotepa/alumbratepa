@@ -43,7 +43,7 @@ conda create --name webapp --file webenv.txt
 
 ```bash
 conda activate webapp 
-set FLASK_APP = app
+set FLASK_APP = app/app.py
 flask run 
 ```
 
