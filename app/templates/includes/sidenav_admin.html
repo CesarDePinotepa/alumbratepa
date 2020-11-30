@@ -9,29 +9,29 @@
       <div class="collapse navbar-collapse" id="sidenav-collapse-main">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="{{ url_for('user_dash') }}">
+            <a class="nav-link {% if 'index' in segment %} active {% endif %}" href="#">
               <i class="ni ni-tv-2 text-primary"></i>
               <span class="nav-link-text">Inicio</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('mis_reportes')}}">
+            <a class="nav-link" href="#">
               <i class="ni ni-collection text-info"></i>
-              <span class="nav-link-text">Mis reportes</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('reportes') }}">
-              <i class="ni ni-bullet-list-67 text-info"></i>
               <span class="nav-link-text">Reportes</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('nuevo_reporte') }}">
-              <i class="ni ni-fat-add text-info"></i>
-              <span class="nav-link-text">Nuevo reporte</span>
+            <a class="nav-link" href="{{ url_for('mis_usuarios') }}">
+              <i class="ni ni-bullet-list-67 text-info"></i>
+              <span class="nav-link-text">Usuarios</span>
             </a>
           </li>
+{#          <li class="nav-item">#}
+{#            <a class="nav-link" href="#">#}
+{#              <i class="ni ni-fat-add text-info"></i>#}
+{#              <span class="nav-link-text">Reportes</span>#}
+{#            </a>#}
+{#          </li>#}
         </ul>
         <!-- Divisor -->
         <hr class="my-3">
