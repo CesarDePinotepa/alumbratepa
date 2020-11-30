@@ -4,7 +4,7 @@
 Este archivo maneja las interacciones con la tabla de reportes de la base de datos
 """
 
-from datetime import datetime
+import datetime
 from random import seed, randint
 
 from app.app import mysql
@@ -15,50 +15,54 @@ def traer_todos_los_reportes():
     Esta funcion ayuda a traer todos los reportes desde la base de datos
     """
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM `reporte` ')
+    cur.execute('''SELECT * FROM `reporte`''')
     data = cur.fetchall()
     cur.close()
 
     return data
 
 
-def traer_reportes_por_usuario(user_id):
+def traer_reportes_por_usuario(uid):
     """
 
-    :param user_id:
+    :param uid:
     :return:
     """
-
+    user_id = str(uid)
     cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM `reporte` WHERE `user_id` = %s', user_id)
+    cur.execute('''SELECT * FROM `reporte` WHERE `user_id` = %s''', user_id)
     data = cur.fetchall()
     cur.close()
 
     return data
 
 
-def insertar_reporte(select, direccion, comentario, user_id):
+def insertar_reporte(select, direccion, comentario, user_id, poste):
     """
 
     :param select:
     :param direccion:
     :param comentario:
     :param user_id:
+    :param poste:
     :return:
     """
-    fecha = datetime.now()
+    fecha = datetime.date.today()
     status = "Activo"
 
-    seed(1)
-    r_num = [randint(0, 1000) in range(1000)]
-
+    a = datetime.datetime.now()
+    r_num = a.strftime("%S")
     num_reporte = "AP-"+str(fecha)+str(r_num)
 
+    print(num_reporte, "-", select, "-", direccion, "-", comentario, "-", user_id, "-", poste, "-", fecha)
+
     cur = mysql.connection.cursor()
-    cur.execute("INSERT INTO `reporte`(`numero_reporte`, `direccion`, `status`, `fecha`, `poste`, "
-                "`funcionamiento`, `comentario`, `user_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                (num_reporte, direccion, status, fecha, r_num, select, comentario, user_id))
+    cur.execute('''INSERT INTO `reporte`(`numero_reporte`, `direccion`, `status`, `fecha`, `poste`, '''
+                '''`funcionamiento`, `comentario`, `user_id`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)''',
+                (num_reporte, direccion, status, fecha, poste, select, comentario, user_id))
     mysql.connection.commit()
 
-    return True
+    msj = "El reporte se realizó correctamente"
+
+    return msj
 

@@ -20,24 +20,25 @@
 
               {% with messages = get_flashed_messages()  %}
               {% if messages %}
-              {% for message in messages %}
+
               <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ message }}
+                {{ messages[0] }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              {% endfor %}
+
               {% endif %}
               {% endwith %}
 
-            <form id="registration" role="form" action="{{ url_for('front.registrar_usuario') }}" method="POST">
+
+            <form id="registration" role="form" action="{{ url_for('registrar') }}" method="POST">
               <div class="form-group">
                 <div class="input-group input-group-merge input-group-alternative mb-3">
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Nombre" type="text" name="nombre">
+                  <input class="form-control" placeholder="Nombre" type="text" name="nombre" value="{{ request.form.nombre }}">
                 </div>
               </div>
               <div class="form-group">
@@ -45,7 +46,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Apellidos" type="text" name="apellidos">
+                  <input class="form-control" placeholder="Apellidos" type="text" name="apellidos" value="{{ request.form.apellidos }}">
                 </div>
               </div>
               <div class="form-group">
@@ -53,7 +54,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Correo electrónico" type="email" name="email">
+                  <input class="form-control" placeholder="Correo electrónico" type="email" name="email" value="{{ request.form.email }}">
                 </div>
               </div>
               <div class="form-group">
@@ -61,7 +62,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Contraseña" type="password" name="password">
+                  <input class="form-control" placeholder="Contraseña" type="password" name="password" value="{{ request.form.password }}">
                 </div>
               </div>
               <div class="row my-4">
@@ -78,7 +79,7 @@
         </div>
         <div class="row mt-3">
           <div class="col-6">
-              <a href="login">Iniciar Sesión</a>
+              <a href="{{ url_for('login') }}">Iniciar Sesión</a>
           </div>
           <div class="col-6 text-right">
           </div>

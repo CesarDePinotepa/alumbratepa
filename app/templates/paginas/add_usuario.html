@@ -1,0 +1,123 @@
+{% extends 'layouts/base_admin.html' %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+
+<div class="header bg-primary pb-6">
+<div class="container-fluid">
+  <div class="header-body">
+    <div class="row align-items-center py-4">
+      <div class="col-lg-6 col-7">
+        <h6 class="h2 text-white d-inline-block mb-0">Mis usuarios</h6>
+        <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+          <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+            <li class="breadcrumb-item"><a href="#">Nuevo usuario</a></li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-lg-6 col-5 text-right">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+  <div class="row">
+{#    <div class="col-xl-4 order-xl-2">#}
+{#      <div class="card card-profile">#}
+{#          <div id="map-default" class="map-canvas" data-lat="16.3461749" data-lng="-98.0356095" style="height: 600px;"></div>#}
+{#      </div>#}
+{#    </div>#}
+    <div class="col-xl-8 order-xl-1">
+      <div class="card">
+        <div class="card-header">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Agregar nuevo usuario al sistema </h3>
+            </div>
+            <div class="col-4 text-right">
+
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+            {% with messages = get_flashed_messages()  %}
+              {% if messages %}
+
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ messages[0] }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+
+              {% endif %}
+              {% endwith %}
+          <form id="adduser" role="form" action="{{ url_for('nuevo_usuario') }}" method="POST">
+            <h6 class="heading-small text-muted mb-4">Datos de usuario</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">Seleccione tipo de usuario</label>
+                      <select name="user" id="input-user" class="form-control">
+                          {% for d in datos %}
+                          <option value="{{ d.name }}">{{ d.name }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Nombre</label>
+                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" value="{{ request.form.nombre }}">
+                  </div>
+                </div>
+               <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Apellido</label>
+                    <input type="text" name="apellido" class="form-control" placeholder="Apellido" value="{{ request.form.apellido }}">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Credenciales -->
+                      <h6 class="heading-small text-muted mb-4">Datos de acceso</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="Email" value="{{ request.form.email }}">
+                  </div>
+                </div>
+               <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">Contraseña</label>
+                    <input type="password" name="password" class="form-control" placeholder="Contraseña" value="{{ request.form.password }}">
+                  </div>
+                </div>
+              </div>
+            </div>
+           <div class="text-center">
+            <button type="submit" id="btnsubmit" class="btn btn-primary mt-4">Guardar</button>
+           </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include "includes/footer.html" %}
+
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}

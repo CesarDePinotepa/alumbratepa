@@ -1,9 +1,6 @@
-import os
 import hashlib
 
-from functools import wraps
-
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from flask_mysqldb import MySQL
 
 app = Flask(__name__, template_folder='templates')
@@ -18,10 +15,9 @@ app.config['MYSQL_DB'] = 'alumbradopino'
 mysql = MySQL(app)
 
 # settings
-# app.secret_key = b'llave7secreta'
+app.secret_key = b'llave7secreta'
 
-
-from app.models.usuarios_model import traer_usuario
+from app.models.usuarios_model import traer_usuario, insertar_usuario, todos_los_usuarios, agregar_usuario, eliminar_user
 import app.models.reporte_model as r
 
 
@@ -49,9 +45,15 @@ def login():
             if email == user_data[0][3] and encode_pass.hexdigest() == user_data[0][5]:
                 session['logged_in'] = True
                 session['username'] = user_data[0][1]
-                return render_template('paginas/inicio_usuario.html', title="Inicio", error=error, user=user_data[0][1],
-                                       user_id=user_data[0][0])
+                session['user_id'] = int(user_data[0][0])
+                # verificamos el tipo de usuario
+                if int(user_data[0][4]) == 0:
+                    return render_template('paginas/inicio_usuario.html', title="Inicio", error=error, user_id=user_data[0][1])
+                else:
+                    return render_template('paginas/inicio_admin.html', title="Admin", error=error, user_id=user_data[0][1])
             else:
+                if "username" in session:
+                    return redirect(url_for(user_dash))
                 print('La contraseña o el usuario son incorrectos')
                 error = 'La contraseña o el usuario son incorrectos.'
         return render_template('cuentas/login.html', error=error, title="Inicio de Sesión")
@@ -60,75 +62,177 @@ def login():
         return render_template('cuentas/login.html', error=str(err))
 
 
-def login_required(f):
-    @wraps(f)
-    def wrap(*args, **kwargs):
-        """login session"""
-        if 'logged_in' in session:
-            return f(*args, **kwargs)
-        else:
-            pass
-        return redirect(url_for('login'))
-    return wrap
+@app.route('/logout')
+def logout():
+    session.pop("username", None)
+    return redirect(url_for('login'))
 
 
-app.secret_key = b'llave7secreta'
-
-
-@login_required
 @app.route('/reportes')
 def reportes():
     """
     Redireccionar a la vista de todos los reportes
     """
-    reportes_data = r.traer_todos_los_reportes()
-    return render_template('paginas/reporte.html', reportes=reportes_data)
+    if "username" in session:
+        user = session["username"]
+        reportes_data = r.traer_todos_los_reportes()
+        return render_template('paginas/reporte.html', reportes=reportes_data, user_id=user)
+    else:
+        return redirect(url_for("login"))
 
 
 @app.route('/inicio')
-@login_required
 def user_dash():
-    return render_template('paginas/inicio_usuario.html')
+    if "username" in session:
+        user = session["username"]
+        return render_template('paginas/inicio_usuario.html', user_id=user)
+    else:
+        return redirect(url_for("login"))
 
 
-@app.route('/mis-resportes/<user_id>')
-@login_required
-def mis_reportes(user_id):
+@app.route('/inicio-admin')
+def admin_dash():
+    if "username" in session:
+        user = session["username"]
+        return render_template('paginas/inicio_admin.html', user_id=user)
+    else:
+        return redirect(url_for("login"))
+
+
+@app.route('/mis-resportes')
+def mis_reportes():
     """
 
     """
-    reportes_data = r.traer_reportes_por_usuario(user_id)
-    return render_template('paginas/reportes_user.html', reportes=reportes_data)
+    if "username" in session:
+        user_id = session["username"]
+        id_user = session['user_id']
+        reportes_data = r.traer_reportes_por_usuario(id_user)
+        return render_template('paginas/reportes_user.html', reportes=reportes_data, user_id=user_id)
+    else:
+        return redirect(url_for("login"))
 
 
-@app.route('/nuevo-reporte')
-@login_required
+@app.route('/nuevo-reporte', methods=['GET', 'POST'])
 def nuevo_reporte():
-    """
-    """
-    data = [{'name': 'Apagado'}, {'name': 'Foco Roto'}, {'name': 'Poste Caido'}, {'name': 'Cable Caido'}]
-    return render_template('paginas/add_reporte.html', datos=data)
-
-
-@app.route('/agg-reporte', methods=['POST'])
-@login_required
-def agregar_reporte():
     """"
     """
-    try:
-        if request.method == 'POST':
-            select = request.form['mal']
-            direccion = request.form['direccion']
-            comentario = request.form['comentario']
-            user_id = request.form['user_id']
+    if "username" in session:
+        user = session['username']
+        uid = session['user_id']
+        try:
+            if request.method == 'POST':
+                select = request.form['mal']
+                direccion = request.form['direccion']
+                comentario = request.form['comentario']
+                poste = request.form['poste']
 
-            datos_insertados = r.insertar_reporte(select, direccion, comentario, user_id)
-            if datos_insertados:
-                mensaje = ["verde", "Los datos se guardaron correctamente"]
+                mensaje = r.insertar_reporte(select, direccion, comentario, uid, poste)
+
+                flash(mensaje)
+                return redirect(url_for('nuevo_reporte'))
             else:
-                mensaje = ["rojo", "Los datos NO se pudieron guardar"]
+                data = [{'name': 'Apagado'}, {'name': 'Foco Roto'}, {'name': 'Poste Caido'}, {'name': 'Cable Caido'}]
+                return render_template("paginas/add_reporte.html", datos=data, user_id=user)
 
-            return redirect(url_for('nuevo_reporte', mensaje=mensaje))
+        except Exception as err:
+            return render_template('paginas/add_reporte.html', error=str(err))
+
+    else:
+        return redirect(url_for("login"))
+
+
+@app.route('/registrar', methods=["GET", "POST"])
+def registrar():
+    """
+
+    :return:
+    """
+    try:
+        if request.method == "POST":
+            nombre = request.form['nombre']
+            apellidos = request.form['apellidos']
+            email = request.form['email']
+            password = request.form['password']
+
+            mensaje = insertar_usuario(nombre, apellidos, email, password)
+            flash(mensaje)
+            return redirect(url_for('registrar'))
+        else:
+            return render_template("cuentas/registro.html", messages='')
 
     except Exception as err:
-        return render_template('paginas/add_reporte.html', error=str(err))
+        return render_template("cuentas/registro.html", messages=err)
+
+
+@app.route('/mis-usuarios')
+def mis_usuarios():
+    """
+
+    """
+    if "username" in session:
+        user_id = session["username"]
+        usuarios = todos_los_usuarios()
+        return render_template('paginas/mis_usuarios.html', usuarios=usuarios, user_id=user_id)
+    else:
+        return redirect(url_for("login"))
+
+
+@app.route('/nuevo-usuario', methods=["GET", "POST"])
+def nuevo_usuario():
+    """"
+    """
+    if "username" in session:
+        user = session['username']
+        try:
+            if request.method == 'POST':
+                select = request.form['user']
+                nombre = request.form['nombre']
+                apellido = request.form['apellido']
+                password = request.form['password']
+                email = request.form['email']
+
+                mensaje = agregar_usuario(nombre, apellido, email, password, select)
+
+                flash(mensaje)
+                return redirect(url_for('nuevo_usuario'))
+            else:
+                data = [{'name': 'Normal'}, {'name': 'Admin'}]
+                return render_template("paginas/add_usuario.html", datos=data, user_id=user)
+
+        except Exception as err:
+            return render_template('paginas/add_usuario.html', error=str(err))
+
+    else:
+        return redirect(url_for("login"))
+
+
+@app.route('/eliminar-usuario/<uid>', methods=["GET", "POST"])
+def eliminar_usuario(uid):
+    """
+
+    :param id:
+    :return:
+    """
+    mensaje = eliminar_user(int(uid))
+    # mensaje = str(type(int(uid)))
+    flash(mensaje)
+    return redirect(url_for('mis_usuarios'))
+    # if "username" in session:
+    #     user = session['username']
+    #     try:
+    #
+    #         mensaje = eliminar_usuario(uid)
+    #
+    #         flash(mensaje)
+    #         return redirect(url_for('mis_usuarios'))
+    #         # else:
+    #         #     data = [{'name': 'Normal'}, {'name': 'Admin'}]
+    #         #     return render_template("paginas/add_usuario.html", datos=data, user_id=user)
+    #
+    #     except Exception as err:
+    #         return render_template('paginas/mis_usuarios.html', error=str(err))
+    #
+    # else:
+    #     return redirect(url_for("login"))
+
