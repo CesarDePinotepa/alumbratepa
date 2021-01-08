@@ -28,9 +28,8 @@ def traer_reportes_por_usuario(uid):
     :param uid:
     :return:
     """
-    user_id = str(uid)
     cur = mysql.connection.cursor()
-    cur.execute('''SELECT * FROM `reporte` WHERE `user_id` = %s''', user_id)
+    cur.execute('''SELECT * FROM `reporte` WHERE `user_id` = {0}'''.format(uid))
     data = cur.fetchall()
     cur.close()
 

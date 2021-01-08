@@ -58,3 +58,11 @@ flask run
 git pull 
 ```
 * y deberías tener actualizado el repositorio
+
+
+## Usurios por default
+
+* Usuario normal: usuario , contraseña: usuario2020
+
+* Usuario admin: admin, contraseña: admin2020
+

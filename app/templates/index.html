@@ -112,7 +112,7 @@
             <div class="card-header border-0">
               <div class="row align-items-center">
                 <div class="col">
-                  <h3 class="mb-0">Historial de reportes (por el momento son ejemplos)</h3>
+                  <h3 class="mb-0">Historial de reportes</h3>
                 </div>
                 <div class="col text-right">
                 </div>
@@ -127,51 +127,38 @@
                     <th scope="col">Dirección</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Poste</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">
-                      1111111
-                    </th>
-                    <td>
-                      Calle 7, Colonia Siete, Pinotepa Nal
-                    </td>
-                    <td>
-                      Atendido
-                    </td>
-                    <td>
-                      11/09/2020
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      222222
-                    </th>
-                    <td>
-                      Calle 14, Barrio Catorce, Pinotepa Nal
-                    </td>
-                    <td>
-                      Pendiente
-                    </td>
-                    <td>
-                        03/10/2020
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">
-                      3333333
-                    </th>
-                    <td>
-                      Calle 3, Colonia Tres, Pinotepa Nal
-                    </td>
-                    <td>
-                      Cancelado
-                    </td>
-                    <td>
-                      07/10/2020
-                    </td>
-                  </tr>
+                {%  for reporte in reportes %}
+                <tr>
+                  <th scope="row">
+                    <div class="media align-items-center">
+                      <div class="media-body">
+                        <span class="name mb-0 text-sm">{{ reporte.1 }}</span>
+                      </div>
+                    </div>
+                  </th>
+                  <td class="budget">
+                    {{ reporte.2 }}
+                  </td>
+                  <td>
+                    <span class="badge badge-dot mr-4">
+                      <i class="bg-warning"></i>
+                      <span class="status">{{ reporte.3 }}</span>
+                    </span>
+                  </td>
+                  <td>
+                      {{ reporte.4 }}
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                        {{ reporte.5 }}
+                    </div>
+                  </td>
+                </tr>
+              {% endfor %}
                 </tbody>
               </table>
             </div>

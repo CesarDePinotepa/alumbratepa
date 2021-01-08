@@ -21,9 +21,11 @@ from app.models.usuarios_model import traer_usuario, insertar_usuario, todos_los
 import app.models.reporte_model as r
 
 
+
 @app.route('/')
 def main():
-    return render_template('index.html')
+    reportes_data = r.traer_todos_los_reportes()
+    return render_template('index.html', reportes=reportes_data)
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -85,7 +87,8 @@ def reportes():
 def user_dash():
     if "username" in session:
         user = session["username"]
-        return render_template('paginas/inicio_usuario.html', user_id=user)
+        reportes_data = r.traer_todos_los_reportes()
+        return render_template('paginas/inicio_usuario.html', user_id=user, reportes=reportes_data)
     else:
         return redirect(url_for("login"))
 
@@ -94,7 +97,9 @@ def user_dash():
 def admin_dash():
     if "username" in session:
         user = session["username"]
-        return render_template('paginas/inicio_admin.html', user_id=user)
+        reportes_data = r.traer_todos_los_reportes()
+        print("Cesar")
+        return render_template('paginas/inicio_admin.html', user_id=user, reportes=reportes_data)
     else:
         return redirect(url_for("login"))
 
@@ -218,21 +223,17 @@ def eliminar_usuario(uid):
     # mensaje = str(type(int(uid)))
     flash(mensaje)
     return redirect(url_for('mis_usuarios'))
-    # if "username" in session:
-    #     user = session['username']
-    #     try:
-    #
-    #         mensaje = eliminar_usuario(uid)
-    #
-    #         flash(mensaje)
-    #         return redirect(url_for('mis_usuarios'))
-    #         # else:
-    #         #     data = [{'name': 'Normal'}, {'name': 'Admin'}]
-    #         #     return render_template("paginas/add_usuario.html", datos=data, user_id=user)
-    #
-    #     except Exception as err:
-    #         return render_template('paginas/mis_usuarios.html', error=str(err))
-    #
-    # else:
-    #     return redirect(url_for("login"))
 
+
+@app.route('/admin-resportes')
+def admin_reportes():
+    """
+
+    """
+    if "username" in session:
+        user_id = session["username"]
+        id_user = session['user_id']
+        reportes_data = r.traer_todos_los_reportes()
+        return render_template('paginas/admin_reporte.html', reportes=reportes_data, user_id=user_id)
+    else:
+        return redirect(url_for("login"))
